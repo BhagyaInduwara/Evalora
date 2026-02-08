@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signup as mockSignup } from "@/lib/mockAuth";
 
 export function SignUpForm({
   className,
@@ -40,14 +41,26 @@ export function SignUpForm({
     }
 
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/protected`,
-        },
-      });
-      if (error) throw error;
+      // Try existing supabase signup if configured, otherwise do a client-side mock signup
+      try {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/protected`,
+          },
+        });
+        if (!error) {
+          router.push("/auth/sign-up-success");
+          return;
+        }
+      } catch {}
+
+      const role = (document.getElementById("role") as HTMLSelectElement)
+        ?.value as any;
+      const grade = (document.getElementById("grade") as HTMLSelectElement)
+        ?.value;
+      await mockSignup(email, password, role, grade);
       router.push("/auth/sign-up-success");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
@@ -76,6 +89,31 @@ export function SignUpForm({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="role">I am a…</Label>
+                <select
+                  id="role"
+                  className="rounded border px-3 py-2"
+                  defaultValue="student"
+                >
+                  <option value="student">Student</option>
+                  <option value="teacher">Teacher</option>
+                  <option value="parent">Parent</option>
+                </select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="grade">Grade</Label>
+                <select id="grade" className="rounded border px-3 py-2" defaultValue="6">
+                  {Array.from({ length: 8 }).map((_, i) => {
+                    const g = (i + 6).toString();
+                    return (
+                      <option key={g} value={g}>
+                        {`Grade ${g}`}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">

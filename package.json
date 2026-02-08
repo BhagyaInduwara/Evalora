@@ -2,6 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "clean-lock": "node ./scripts/remove-next-lock.js",
+    "dev:clean": "pnpm run clean-lock && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint ."

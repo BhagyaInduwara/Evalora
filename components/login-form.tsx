@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { login as mockLogin } from "@/lib/mockAuth";
 
 export function LoginForm({
   className,
@@ -33,13 +34,24 @@ export function LoginForm({
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push("/protected");
+      // First try the provided supabase client (if configured), otherwise use a local mock auth.
+      let redirected = false;
+      try {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (!error) {
+          router.push("/protected");
+          redirected = true;
+        }
+      } catch {}
+
+      if (!redirected) {
+        const user = await mockLogin(email, password);
+        // route to role specific protected page
+        router.push(`/protected/${user.role}`);
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
@@ -55,6 +67,29 @@ export function LoginForm({
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
+          <div className="mt-3">
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              <div className="font-medium mb-1">Demo accounts</div>
+              <div className="grid grid-cols-1 gap-1 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-foreground/80">student@evalora.com</span>
+                  <span className="font-mono ml-3">password</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-foreground/80">teacher@evalora.com</span>
+                  <span className="font-mono">password</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-foreground/80">parent@evalora.com</span>
+                  <span className="font-mono">password</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-foreground/80">admin@evalora.com</span>
+                  <span className="font-mono">password</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
