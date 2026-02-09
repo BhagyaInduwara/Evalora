@@ -27,43 +27,12 @@ export default function NoteViewerPage() {
           >
             Back to Notes
           </Link>
-            {["Dashboard", "Notes", "Quizzes", "Papers", "Progress", "Leaderboard"].map((item) => {
-              const href = item === "Dashboard" ? "/protected/student" : item === "Notes" ? "/protected/student/notes" : `/protected/student/${item.toLowerCase()}`;
-              return (
-                <Link
-                  key={item}
-                  href={href}
-                  className={`pb-2 border-b-2 transition ${
-                    item === "Notes"
-                      ? "border-white text-white"
-                      : "border-transparent text-purple-200 hover:text-white"
-                  }`}
-                >
-                  {item}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Navigation tabs */}
-          <div className="flex gap-8 mt-6 text-sm font-medium">
-            {["Dashboard", "Notes", "Quizzes", "Papers", "Progress", "Leaderboard"].map((item) => (
-              <a
-                key={item}
-                href={item === "Notes" ? "/protected/student/notes" : `/protected/student/${item.toLowerCase()}`}
-                className={`pb-2 border-b-2 transition ${
-                  item === "Notes"
-                    ? "border-white text-white"
-                    : "border-transparent text-purple-200 hover:text-white"
-                }`}
-              >
-                {item}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
+    );
 
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       {/* Main content */}
       <div className="w-full px-4 sm:px-6 py-8">
         {/* Note Header */}
