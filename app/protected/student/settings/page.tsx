@@ -33,7 +33,7 @@ export default function StudentSettingsPage() {
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       {/* Header with purple gradient background */}
       <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+        <div className="w-full px-4 sm:px-6 py-6">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-4xl font-bold">Evalora</h1>
@@ -66,7 +66,7 @@ export default function StudentSettingsPage() {
       </div>
 
       {/* Main content */}
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full px-4 sm:px-6 py-8">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Account Settings</h2>
 
         {/* Profile Section */}

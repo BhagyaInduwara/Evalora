@@ -58,7 +58,7 @@ export default function QuizAttemptPage() {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
         <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
-          <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+          <div className="w-full px-4 sm:px-6 py-6">
             <div>
               <h1 className="text-4xl font-bold">Evalora</h1>
               <p className="text-purple-200 text-sm mt-1">Quiz Results</p>
@@ -83,7 +83,7 @@ export default function QuizAttemptPage() {
           </div>
         </div>
 
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-12 flex items-center justify-center min-h-[500px]">
+        <div className="w-full px-4 sm:px-6 py-12 flex items-center justify-center min-h-[500px]">
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 p-12 text-center">
             <div className="text-6xl mb-6">{score === 100 ? "🎉" : score >= 80 ? "👏" : score >= 60 ? "👍" : "📚"}</div>
 
@@ -114,7 +114,7 @@ export default function QuizAttemptPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
+        <div className="w-full px-4 sm:px-6 py-6">
           <div className="flex justify-between items-center mb-6">
             <div>
               <h1 className="text-4xl font-bold">Evalora</h1>
@@ -136,7 +136,7 @@ export default function QuizAttemptPage() {
       </div>
 
       <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6">
           <div className="flex gap-8 text-sm font-medium border-t border-white border-opacity-20">
             {["Dashboard", "Notes", "Quizzes", "Papers", "Progress", "Leaderboard"].map((item) => {
               const href = item === "Dashboard" ? "/protected/student" : item === "Quizzes" ? "/protected/student/quizzes" : `/protected/student/${item.toLowerCase()}`;
@@ -150,7 +150,7 @@ export default function QuizAttemptPage() {
         </div>
       </div>
 
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full px-4 sm:px-6 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{quiz.title}</h1>
           <p className="text-gray-600 dark:text-gray-400">{quiz.topic} • Question <span className="font-semibold">{Object.keys(answers).length || "??"}</span> of {quiz.questions.length}</p>

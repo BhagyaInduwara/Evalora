@@ -42,7 +42,7 @@ export default function PaperViewPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       {/* Main content */}
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full px-4 sm:px-6 py-8">
         {/* Paper Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">

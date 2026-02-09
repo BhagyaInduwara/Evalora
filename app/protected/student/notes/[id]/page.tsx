@@ -65,7 +65,7 @@ export default function NoteViewerPage() {
       </div>
 
       {/* Main content */}
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full px-4 sm:px-6 py-8">
         {/* Note Header */}
         <div className="mb-8">
           <div className="flex items-start justify-between mb-4">
