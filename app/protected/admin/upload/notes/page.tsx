@@ -13,7 +13,7 @@ const subjectTopics: Record<string, string[]> = {
   Biology: ["Cells", "Genetics", "Ecology", "Human Systems"],
 };
 
-export default function TeacherUploadNotesPage() {
+export default function AdminUploadNotesPage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
@@ -33,23 +33,22 @@ export default function TeacherUploadNotesPage() {
       title,
       subject,
       content,
-      author: user?.email || "teacher@evalora.com",
-      visibility: "teacher",
-      teacherEmail: user?.email || "teacher@evalora.com",
+      author: user?.email || "admin@evalora.com",
+      visibility: "admin",
     });
     setTitle("");
     setSubject("");
     setTopic("");
     setContent("");
     setFileName("");
-    router.push("/protected/teacher/upload");
+    router.push("/protected/admin/upload");
   };
 
   return (
     <div className="space-y-8">
       <div>
         <h2 className="text-3xl font-semibold text-slate-900">Upload Notes</h2>
-        <p className="mt-2 text-slate-600">Share study materials and notes with your students.</p>
+        <p className="mt-2 text-slate-600">Share study materials and notes with all students.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -138,7 +137,7 @@ export default function TeacherUploadNotesPage() {
           <div className="flex flex-wrap justify-end gap-3">
             <button
               type="button"
-              onClick={() => router.push("/protected/teacher/upload")}
+              onClick={() => router.push("/protected/admin/upload")}
               className="rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-600 hover:border-slate-300"
             >
               Cancel

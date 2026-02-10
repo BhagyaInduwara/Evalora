@@ -5,6 +5,21 @@ import { useEffect, useState } from "react";
 import { getNotes, Note } from "@/lib/mockData";
 import Link from "next/link";
 
+function isHtmlContent(content: string): boolean {
+  return /^<[a-z][\s\S]*>/i.test(content.trim());
+}
+
+function renderNoteContent(content: string): string {
+  if (isHtmlContent(content)) return content;
+  return content
+    .replace(/^# (.+)$/gm, '<h1 class="text-2xl font-bold mb-4 mt-6">$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2 class="text-xl font-semibold mb-3 mt-5">$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3 class="text-lg font-semibold mb-2 mt-4">$1</h3>')
+    .replace(/^- (.+)$/gm, '<li class="ml-5 mb-1">$1</li>')
+    .replace(/(<li[\s\S]+<\/li>)/, '<ul class="space-y-2 mb-4">$1</ul>')
+    .replace(/\n\n/g, '</p><p class="mb-4">');
+}
+
 export default function NoteViewerPage() {
   const params = useParams();
   const router = useRouter();
@@ -88,17 +103,11 @@ export default function NoteViewerPage() {
         </div>
 
         {/* Note Content */}
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 prose dark:prose-invert max-w-none">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 max-w-none">
           <div
-            className="text-gray-900 dark:text-gray-100 leading-relaxed"
+            className="note-content text-gray-900 dark:text-gray-100 leading-relaxed"
             dangerouslySetInnerHTML={{
-              __html: note.content
-                .replace(/^# (.+)$/gm, '<h1 class="text-2xl font-bold mb-4 mt-6">$1</h1>')
-                .replace(/^## (.+)$/gm, '<h2 class="text-xl font-semibold mb-3 mt-5">$1</h2>')
-                .replace(/^### (.+)$/gm, '<h3 class="text-lg font-semibold mb-2 mt-4">$1</h3>')
-                .replace(/^- (.+)$/gm, '<li class="ml-5 mb-1">$1</li>')
-                .replace(/(<li.+<\/li>)/s, '<ul class="space-y-2 mb-4">$1</ul>')
-                .replace(/\n\n/g, '</p><p class="mb-4">'),
+              __html: renderNoteContent(note.content),
             }}
           />
         </div>
